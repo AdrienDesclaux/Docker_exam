@@ -1,0 +1,53 @@
+version: '3.8'
+
+networks:
+  MyBridgedNetwork:
+    driver: bridge 
+    ipam:
+      config:
+        - subnet: 172.1.1.0/24
+  BCNetwork:
+    driver: bridge
+    ipam: 
+      config:
+        - subnet: 172.2.2.0/24
+
+volumes: 
+  bdd:
+  blockchain:
+
+services:
+  nginx:
+    image: adrien_custom_nginx
+    container_name: adrien_nginx
+    networks:
+      - MyBridgedNetwork
+    ports:
+      - "8080:80"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    container_name: mongo_container
+    networks:
+      - MyBridgedNetwork
+    volumes:
+      - bdd:/data/db
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo_express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo_container
+    networks:
+      - MyBridgedNetwork
+    ports:
+      - "8082:8081"
+
+  ethereum-node:
+    image: eth-node
+    container_name: ethereum_node
+    networks:
+      - BCNetwork
+    volumes:
+      - blockchain:/root/.ethereum

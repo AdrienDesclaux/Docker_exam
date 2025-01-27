@@ -1,2 +1,2 @@
 FROM ethereum/client-go
-CMD ["--syncmode", "fast"]
+CMD ["--dev", "--http", "--http.addr", "0.0.0.0"]
