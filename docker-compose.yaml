@@ -23,7 +23,7 @@ services:
     networks:
       - MyBridgedNetwork
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - mongo
   mongo:
@@ -31,6 +31,8 @@ services:
     container_name: mongo_container
     networks:
       - MyBridgedNetwork
+    ports:
+      - "27017:27017"
     volumes:
       - bdd:/data/db
 
@@ -42,12 +44,14 @@ services:
     networks:
       - MyBridgedNetwork
     ports:
-      - "8082:8081"
+      - "8081:8081"
 
   ethereum-node:
-    image: eth-node
+    image: adriendesclaux/eth-node
     container_name: ethereum_node
     networks:
       - BCNetwork
+    ports:
+      - "8545:8545"
     volumes:
-      - blockchain:/root/.ethereum
+      - blockchain:/root/ethereum

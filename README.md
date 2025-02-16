@@ -6,7 +6,7 @@ Step 1. Create a network =>
 
 Step 2. Deploy an nginx image on the network =>
 
-- `docker run -d --name nginx_container --network MyBridgedNetwork -p 8000:80 nginx`
+- `docker run -d --name nginx_container --network MyBridgedNetwork -p 80:80 nginx`
 
 Step 3. Modify HTML page of nginx =>
 
@@ -43,4 +43,4 @@ Step 8. Push du client node =>
 Step 9. Create volume and run the eth node =>
 
 - `docker volume create blockchain`
-- `docker run -d --name ethereum_node --network BCNetwork -v blockchain:/root/.ethereum adriendesclaux/eth-node`
+- `docker run -d --name ethereum_node --network BCNetwork -v blockchain:/root/ethereum adriendesclaux/eth-node`
